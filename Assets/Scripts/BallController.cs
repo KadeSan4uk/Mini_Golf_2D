@@ -3,6 +3,7 @@ using UnityEngine;
 public class BallController : MonoBehaviour
 {
     private Rigidbody2D _rb;
+
     [SerializeField] private float _movementSpeed;
 
     private void Awake()
@@ -10,12 +11,11 @@ public class BallController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            Vector2 newPosition = _rb.position + Vector2.up * Time.deltaTime * _movementSpeed;
-            _rb.MovePosition(newPosition);
+            _rb.AddForce(Vector2.up*_movementSpeed, ForceMode2D.Impulse);
         }
     }
 }
