@@ -1,3 +1,4 @@
+using NUnit.Framework.Constraints;
 using TMPro;
 using UnityEngine;
 
@@ -5,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _scoreText;
     [SerializeField] private BallController _ballController;
+    [SerializeField] private ChargeLine _chargeLine;
+    [SerializeField] private GameObject _canHit;
     [SerializeField] private float _lowSpeedThreshold = 1f;
     private int _currentScore = -15;
     private bool _ballInHole = false;
@@ -14,6 +17,9 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         UpdateScoreText();
+
+        if(_chargeLine is not null)
+            _chargeLine.gameObject.SetActive(true);
     }
 
     public void OnBallInHole(float ballSpeed)
@@ -23,6 +29,8 @@ public class GameManager : MonoBehaviour
             _ballInHole = true;
             _ballController.DisappearBall();
             ResetBallPosition();
+
+            HideActionButton();
         }
     }
 
@@ -38,6 +46,8 @@ public class GameManager : MonoBehaviour
         }
 
         _ballInHole = false;
+
+        ShowActionButton();
     }
 
     private void AddScore(bool isHoleHit)
@@ -69,4 +79,16 @@ public class GameManager : MonoBehaviour
     {
         _ballController.ResetBall(); 
     }
+    private void ShowActionButton()
+    {
+        if (_canHit != null)
+            _canHit.SetActive(true);
+    }
+
+    public void HideActionButton()
+    {
+        if (_canHit != null)
+            _canHit.SetActive(false);
+    }
+
 }

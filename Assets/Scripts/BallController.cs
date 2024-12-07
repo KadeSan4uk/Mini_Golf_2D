@@ -38,6 +38,9 @@ public class BallController : MonoBehaviour
             _isCharging = false;
             _chargeTimer = 0f;
             _isMoving = true;
+
+            _gameManager.HideActionButton();
+
         }
     }
 
@@ -49,6 +52,7 @@ public class BallController : MonoBehaviour
             _gameManager.OnBallStopped();
         }
     }
+
     public void DisappearBall()
     {
         gameObject.SetActive(false);
@@ -60,5 +64,15 @@ public class BallController : MonoBehaviour
         _rb.linearVelocity = Vector2.zero;
         gameObject.SetActive(true);
         _isMoving = false;
+    }
+
+    public float GetChargeLevel()
+    {
+        return _chargeTimer / _chargeTime;
+    }
+
+    public bool IsCharging()
+    {
+        return _isCharging;
     }
 }
